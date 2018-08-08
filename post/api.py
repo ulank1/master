@@ -10,7 +10,35 @@ from tastypie.resources import ModelResource
 from models import Users, Category, Order, ServiceMaster
 
 
-class CategoryResources(ModelResource):
+class MultipartResource(object):
+
+    def deserialize(self, request, data, format=None):
+
+        if not format:
+            format = request.META.get('CONTENT_TYPE', 'application/json')
+
+        if format == 'application/x-www-form-urlencoded':
+            return request.POST
+
+        if format.startswith('multipart/form-data'):
+            multipart_data = request.POST.copy()
+            multipart_data.update(request.FILES)
+            return multipart_data
+
+        return super(MultipartResource, self).deserialize(request, data, format)
+
+    def put_detail(self, request, **kwargs):
+        if request.META.get('CONTENT_TYPE', '').startswith('multipart/form-data') and not hasattr(request, '_body'):
+            request._body = ''
+        return super(MultipartResource, self).put_detail(request, **kwargs)
+
+    def patch_detail(self, request, **kwargs):
+        if request.META.get('CONTENT_TYPE', '').startswith('multipart/form-data') and not hasattr(request, '_body'):
+            request._body = ''
+        return super(MultipartResource, self).patch_detail(request, **kwargs)
+
+
+class CategoryResources(MultipartResource, ModelResource):
     class Meta:
         resource_name = 'category'
         queryset = Category.objects.all()
@@ -21,7 +49,7 @@ class CategoryResources(ModelResource):
         }
 
 
-class UserResource(ModelResource):
+class UserResource(MultipartResource, ModelResource):
     class Meta:
         limit = 0
         max_limit = 0
@@ -36,7 +64,7 @@ class UserResource(ModelResource):
         }
 
 
-class ServicesResource(ModelResource):
+class ServicesResource(MultipartResource, ModelResource):
     user = fields.ForeignKey(UserResource, 'user', null=True, full=True)
     category = fields.ForeignKey(CategoryResources, 'category', null=True, full=True)
 
@@ -53,7 +81,7 @@ class ServicesResource(ModelResource):
         }
 
 
-class OrderResource(ModelResource):
+class OrderResource(MultipartResource, ModelResource):
     user = fields.ForeignKey(UserResource, 'user', null=True, full=True)
     category = fields.ForeignKey(CategoryResources, 'category', null=True, full=True)
 
