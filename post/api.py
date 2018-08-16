@@ -105,7 +105,7 @@ class ForumSubCategoryResources(MultipartResource, ModelResource):
         }
 
 
-class ForumResource(MultipartResource, ModelResource):
+class ForumResource(ModelResource):
 
     user = fields.ForeignKey(UserResource, 'user', null=True, full=True)
     sub_category = fields.ForeignKey(ForumSubCategoryResources, 'sub_category', null=True, full=True)
@@ -116,10 +116,11 @@ class ForumResource(MultipartResource, ModelResource):
         queryset = Forum.objects.all()
         authorization = Authorization()
         allowed_methods = ['get', 'post', 'put', 'delete']
-        resource_name = 'forum'
+        resource_name = 'forum1'
         filtering = {
             'id': ALL_WITH_RELATIONS,
-            'title': ALL_WITH_RELATIONS,
+            'sub_category': ALL_WITH_RELATIONS,
+            'title': ['exact', 'range', 'gt', 'gte', 'lt', 'lte'],
             'description': ALL_WITH_RELATIONS,
         }
 
@@ -175,7 +176,7 @@ class ServicesResource(MultipartResource, ModelResource):
         resource_name = 'service'
         filtering = {
             'user': ALL_WITH_RELATIONS,
-            'category': ALL_WITH_RELATIONS,
+            'sub_category': ALL_WITH_RELATIONS,
         }
 
 
@@ -192,6 +193,6 @@ class OrderResource(MultipartResource, ModelResource):
         resource_name = 'order'
         filtering = {
             'user': ALL_WITH_RELATIONS,
-            'category': ALL_WITH_RELATIONS,
+            'sub_category': ALL_WITH_RELATIONS,
             'status': ALL,
         }

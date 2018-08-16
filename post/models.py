@@ -152,3 +152,12 @@ class Order(models.Model):
 
     def __unicode__(self):
         return self.address
+
+
+class ConfirmationOrder(models.Model):
+
+    user = models.ForeignKey(Users, verbose_name='пользователь')
+    order = models.ForeignKey(Order, verbose_name='Заказ')
+    confirmation = models.CharField(max_length=200, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True)
+    updated_at = models.DateTimeField(auto_now=True, blank=True)
