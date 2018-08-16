@@ -30,6 +30,7 @@ v1_api.register(ForumSubCategoryResources())
 v1_api.register(ForumResource())
 v1_api.register(CommentResource())
 v1_api.register(ConfirmationResource())
+v1_api.register(ConfirmationOrderResource())
 
 urlpatterns = [
     url(r'^jet/', include('jet.urls', 'jet')),  # Django JET URLS

@@ -7,11 +7,11 @@ from tastypie.exceptions import BadRequest
 
 from tastypie.resources import ModelResource
 
-from models import Users, Category, Order, ServiceMaster, SubCategory, Forum, ForumSubCategory, ForumCategory,Comment,Confirmation
+from models import Users, Category, Order, ServiceMaster, SubCategory, Forum, ForumSubCategory, ForumCategory, Comment, \
+    Confirmation, ConfirmationOrder
 
 
 class MultipartResource(object):
-
     def deserialize(self, request, data, format=None):
 
         if not format:
@@ -50,7 +50,6 @@ class CategoryResources(MultipartResource, ModelResource):
 
 
 class SubCategoryResources(MultipartResource, ModelResource):
-
     category = fields.ForeignKey(CategoryResources, 'category', full=True)
 
     class Meta:
@@ -91,7 +90,6 @@ class ForumCategoryResources(MultipartResource, ModelResource):
 
 
 class ForumSubCategoryResources(MultipartResource, ModelResource):
-
     category = fields.ForeignKey(ForumCategoryResources, 'category', full=True)
 
     class Meta:
@@ -106,7 +104,6 @@ class ForumSubCategoryResources(MultipartResource, ModelResource):
 
 
 class ForumResource(ModelResource):
-
     user = fields.ForeignKey(UserResource, 'user', null=True, full=True)
     sub_category = fields.ForeignKey(ForumSubCategoryResources, 'sub_category', null=True, full=True)
 
@@ -126,7 +123,6 @@ class ForumResource(ModelResource):
 
 
 class CommentResource(MultipartResource, ModelResource):
-
     user = fields.ForeignKey(UserResource, 'user', null=True, full=True)
     forum = fields.ForeignKey(ForumResource, 'forum', null=True, full=True)
 
@@ -145,7 +141,6 @@ class CommentResource(MultipartResource, ModelResource):
 
 
 class ConfirmationResource(MultipartResource, ModelResource):
-
     forum = fields.ForeignKey(ForumResource, 'forum', null=True, full=True)
     user = fields.ForeignKey(UserResource, 'user', null=True, full=True)
 
@@ -195,4 +190,22 @@ class OrderResource(MultipartResource, ModelResource):
             'user': ALL_WITH_RELATIONS,
             'sub_category': ALL_WITH_RELATIONS,
             'status': ALL,
+        }
+
+
+class ConfirmationOrderResource(MultipartResource, ModelResource):
+    order = fields.ForeignKey(OrderResource, 'order', null=True, full=True)
+    user = fields.ForeignKey(UserResource, 'user', null=True, full=True)
+
+    class Meta:
+        limit = 0
+        max_limit = 0
+        queryset = ConfirmationOrder.objects.all()
+        authorization = Authorization()
+        allowed_methods = ['get', 'post', 'put', 'delete']
+        resource_name = 'confirm'
+        filtering = {
+            'id': ALL_WITH_RELATIONS,
+            'user': ALL_WITH_RELATIONS,
+            'order': ALL_WITH_RELATIONS,
         }
