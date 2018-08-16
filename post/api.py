@@ -7,7 +7,7 @@ from tastypie.exceptions import BadRequest
 
 from tastypie.resources import ModelResource
 
-from models import Users, Category, Order, ServiceMaster
+from models import Users, Category, Order, ServiceMaster, SubCategory, Forum, ForumSubCategory, ForumCategory,Comment,Confirmation
 
 
 class MultipartResource(object):
@@ -49,6 +49,21 @@ class CategoryResources(MultipartResource, ModelResource):
         }
 
 
+class SubCategoryResources(MultipartResource, ModelResource):
+
+    category = fields.ForeignKey(CategoryResources, 'category', full=True)
+
+    class Meta:
+        resource_name = 'subcategory'
+        queryset = SubCategory.objects.all()
+        authorization = Authorization()
+        allowed_methods = ['get', 'post', 'put', 'delete']
+        filtering = {
+            'sub_category': ALL_WITH_RELATIONS,
+            'category': ALL_WITH_RELATIONS,
+        }
+
+
 class UserResource(MultipartResource, ModelResource):
     class Meta:
         limit = 0
@@ -64,9 +79,92 @@ class UserResource(MultipartResource, ModelResource):
         }
 
 
+class ForumCategoryResources(MultipartResource, ModelResource):
+    class Meta:
+        resource_name = 'forumcategory'
+        queryset = ForumCategory.objects.all()
+        authorization = Authorization()
+        allowed_methods = ['get', 'post', 'put', 'delete']
+        filtering = {
+            'category': ALL_WITH_RELATIONS,
+        }
+
+
+class ForumSubCategoryResources(MultipartResource, ModelResource):
+
+    category = fields.ForeignKey(ForumCategoryResources, 'category', full=True)
+
+    class Meta:
+        resource_name = 'forumsubcategory'
+        queryset = ForumSubCategory.objects.all()
+        authorization = Authorization()
+        allowed_methods = ['get', 'post', 'put', 'delete']
+        filtering = {
+            'sub_category': ALL_WITH_RELATIONS,
+            'category': ALL_WITH_RELATIONS,
+        }
+
+
+class ForumResource(MultipartResource, ModelResource):
+
+    user = fields.ForeignKey(UserResource, 'user', null=True, full=True)
+    sub_category = fields.ForeignKey(ForumSubCategoryResources, 'sub_category', null=True, full=True)
+
+    class Meta:
+        limit = 0
+        max_limit = 0
+        queryset = Forum.objects.all()
+        authorization = Authorization()
+        allowed_methods = ['get', 'post', 'put', 'delete']
+        resource_name = 'forum'
+        filtering = {
+            'id': ALL_WITH_RELATIONS,
+            'title': ALL_WITH_RELATIONS,
+            'description': ALL_WITH_RELATIONS,
+        }
+
+
+class CommentResource(MultipartResource, ModelResource):
+
+    user = fields.ForeignKey(UserResource, 'user', null=True, full=True)
+    forum = fields.ForeignKey(ForumResource, 'forum', null=True, full=True)
+
+    class Meta:
+        limit = 0
+        max_limit = 0
+        queryset = Comment.objects.all()
+        authorization = Authorization()
+        allowed_methods = ['get', 'post', 'put', 'delete']
+        resource_name = 'comment'
+        filtering = {
+            'id': ALL_WITH_RELATIONS,
+            'comment': ALL_WITH_RELATIONS,
+            'forum': ALL_WITH_RELATIONS,
+        }
+
+
+class ConfirmationResource(MultipartResource, ModelResource):
+
+    forum = fields.ForeignKey(ForumResource, 'forum', null=True, full=True)
+    user = fields.ForeignKey(UserResource, 'user', null=True, full=True)
+
+    class Meta:
+        limit = 0
+        max_limit = 0
+        queryset = Confirmation.objects.all()
+        authorization = Authorization()
+        allowed_methods = ['get', 'post', 'put', 'delete']
+        resource_name = 'confirmation'
+        filtering = {
+            'id': ALL_WITH_RELATIONS,
+            'user': ALL_WITH_RELATIONS,
+            'forum': ALL_WITH_RELATIONS,
+        }
+
+
 class ServicesResource(MultipartResource, ModelResource):
     user = fields.ForeignKey(UserResource, 'user', null=True, full=True)
-    category = fields.ForeignKey(CategoryResources, 'category', null=True, full=True)
+    sub_category = fields.ForeignKey(SubCategoryResources, 'sub_category', null=True, full=True)
 
     class Meta:
         limit = 0
@@ -83,7 +181,7 @@ class ServicesResource(MultipartResource, ModelResource):
 
 class OrderResource(MultipartResource, ModelResource):
     user = fields.ForeignKey(UserResource, 'user', null=True, full=True)
-    category = fields.ForeignKey(CategoryResources, 'category', null=True, full=True)
+    sub_category = fields.ForeignKey(SubCategoryResources, 'sub_category', null=True, full=True)
 
     class Meta:
         limit = 0
