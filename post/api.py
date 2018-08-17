@@ -116,6 +116,7 @@ class ForumResource(ModelResource):
         resource_name = 'forum1'
         filtering = {
             'id': ALL_WITH_RELATIONS,
+            'user': ALL_WITH_RELATIONS,
             'sub_category': ALL_WITH_RELATIONS,
             'title': ['exact', 'range', 'gt', 'gte', 'lt', 'lte'],
             'description': ALL_WITH_RELATIONS,
