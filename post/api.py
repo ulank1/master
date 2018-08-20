@@ -103,7 +103,7 @@ class ForumSubCategoryResources(MultipartResource, ModelResource):
         }
 
 
-class ForumResource(ModelResource):
+class ForumResource(MultipartResource, ModelResource):
     user = fields.ForeignKey(UserResource, 'user', null=True, full=True)
     sub_category = fields.ForeignKey(ForumSubCategoryResources, 'sub_category', null=True, full=True)
 
