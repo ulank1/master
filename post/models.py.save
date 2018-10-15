@@ -87,10 +87,11 @@ class Forum(models.Model):
     count = models.IntegerField(verbose_name='количество', default=0, null=True, blank=True)
     sub_category = models.ForeignKey(ForumSubCategory, verbose_name='категория')
     user = models.ForeignKey(Users, verbose_name='пользователь')
-    created_at = models.DateTimeField(auto_now_add=True, blank=True,null=True)
-    updated_at = models.DateTimeField(auto_now=True, blank=True,null=True)
+
 
     def __unicode__(self):
+  created_at = models.DateTimeField(auto_now_add=True, blank=True)
+    updated_at = models.DateTimeField(auto_now=True, blank=True)
         return self.title
 
 

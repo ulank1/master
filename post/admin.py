@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.contrib import admin
 
-from models import Users, Category, Order, ServiceMaster, SubCategory, Forum, ForumSubCategory, ForumCategory,Confirmation
+from models import Users, Category, Order, ServiceMaster, SubCategory, Forum, ForumSubCategory, ForumCategory,Confirmation, ConfirmationOrder
 
 
 # Register your models here.
@@ -65,8 +65,16 @@ class ConfirmationAdmin(admin.ModelAdmin):
 admin.site.register(Confirmation, ConfirmationAdmin)
 
 
+class ConfirmAdmin(admin.ModelAdmin):
+    model = ConfirmationOrder
+
+
+admin.site.register(ConfirmationOrder, ConfirmAdmin)
+
+
 class ForumAdmin(admin.ModelAdmin):
     model = Forum
+    readonly_fields = 'created_at updated_at'.split()
     list_display = ("title", "display_user_name", "display_category")
 
     def display_user_name(self, obj):
