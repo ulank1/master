@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.contrib import admin
 
-from models import Users, Category, Order, ServiceMaster, SubCategory, Forum, ForumSubCategory, ForumCategory,Confirmation, ConfirmationOrder
+from models import Users, Category, Order, ServiceMaster, SubCategory, Forum, ForumSubCategory, ForumCategory, Confirmation, ConfirmationOrder, SubCategoryService, CategoryService
 
 
 # Register your models here.
@@ -42,6 +42,20 @@ class SubCategoryAdmin(admin.ModelAdmin):
 
 
 admin.site.register(SubCategory, SubCategoryAdmin)
+
+
+class CategoryAdminService(admin.ModelAdmin):
+    model = CategoryService
+
+
+admin.site.register(CategoryService, CategoryAdminService)
+
+
+class SubCategoryAdminService(admin.ModelAdmin):
+    model = SubCategoryService
+
+
+admin.site.register(SubCategoryService, SubCategoryAdminService)
 
 
 class ForumCategoryAdmin(admin.ModelAdmin):

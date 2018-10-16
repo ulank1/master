@@ -22,6 +22,8 @@ from tastypie.api import Api
 v1_api = Api(api_name='v1')
 v1_api.register(CategoryResources())
 v1_api.register(SubCategoryResources())
+v1_api.register(CategoryResourcesService())
+v1_api.register(SubCategoryResourcesService())
 v1_api.register(UserResource())
 v1_api.register(OrderResource())
 v1_api.register(ServicesResource())

@@ -30,8 +30,8 @@ class Users(models.Model):
 
 class Category(models.Model):
     class Meta:
-        verbose_name = 'Категория'
-        verbose_name_plural = 'Категории'
+        verbose_name = 'Категория задач'
+        verbose_name_plural = 'Категории задач'
 
     category = models.CharField(max_length=200, verbose_name="Категория")
 
@@ -43,8 +43,32 @@ class SubCategory(models.Model):
     category = models.ForeignKey(Category, verbose_name='категория')
 
     class Meta:
-        verbose_name = 'Подкатегория'
-        verbose_name_plural = 'Подкатегории'
+        verbose_name = 'Подкатегория задач'
+        verbose_name_plural = 'Подкатегории задач'
+
+    sub_category = models.CharField(max_length=200, verbose_name="Подкатегория")
+
+    def __unicode__(self):
+        return self.sub_category
+
+
+class CategoryService(models.Model):
+    class Meta:
+        verbose_name = 'Категория услуг'
+        verbose_name_plural = 'Категории услуг'
+
+    category = models.CharField(max_length=200, verbose_name="Категория")
+
+    def __unicode__(self):
+        return self.category
+
+
+class SubCategoryService(models.Model):
+    category = models.ForeignKey(CategoryService, verbose_name='категория')
+
+    class Meta:
+        verbose_name = 'Подкатегория услуг'
+        verbose_name_plural = 'Подкатегории услуг'
 
     sub_category = models.CharField(max_length=200, verbose_name="Подкатегория")
 
@@ -129,7 +153,7 @@ class ServiceMaster(models.Model):
     experience = models.FloatField(verbose_name="Опыт", null=True, blank=True)
     lat = models.FloatField(max_length=20, null=True, blank=True)
     lng = models.FloatField(max_length=20, null=True, blank=True)
-    sub_category = models.ForeignKey(SubCategory, verbose_name='категория', null=True, blank=True)
+    sub_category = models.ForeignKey(SubCategoryService, verbose_name='категория', null=True, blank=True)
     user = models.ForeignKey(Users, verbose_name='пользователь', null=True, blank=True)
 
     def __unicode__(self):

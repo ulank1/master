@@ -3,7 +3,6 @@ choices==0.1
 dj-config-url==0.1.1
 dj-database-url==0.4.0
 Django==1.9.6
-django-filter==2.0.0
 django-geoposition==0.3.0
 django-jet==1.0.6
 django-location-field==2.0.3

@@ -8,7 +8,7 @@ from tastypie.exceptions import BadRequest
 from tastypie.resources import ModelResource
 
 from models import Users, Category, Order, ServiceMaster, SubCategory, Forum, ForumSubCategory, ForumCategory, Comment, \
-    Confirmation, ConfirmationOrder
+    Confirmation, ConfirmationOrder, CategoryService, SubCategoryService
 
 
 class MultipartResource(object):
@@ -54,6 +54,31 @@ class SubCategoryResources(MultipartResource, ModelResource):
 
     class Meta:
         resource_name = 'subcategory'
+        queryset = SubCategory.objects.all()
+        authorization = Authorization()
+        allowed_methods = ['get', 'post', 'put', 'delete']
+        filtering = {
+            'sub_category': ALL_WITH_RELATIONS,
+            'category': ALL_WITH_RELATIONS,
+        }
+
+
+class CategoryResourcesService(MultipartResource, ModelResource):
+    class Meta:
+        resource_name = 'category_service'
+        queryset = Category.objects.all()
+        authorization = Authorization()
+        allowed_methods = ['get', 'post', 'put', 'delete']
+        filtering = {
+            'category': ALL_WITH_RELATIONS,
+        }
+
+
+class SubCategoryResourcesService(MultipartResource, ModelResource):
+    category = fields.ForeignKey(CategoryResourcesService, 'category', full=True)
+
+    class Meta:
+        resource_name = 'subcategory_service'
         queryset = SubCategory.objects.all()
         authorization = Authorization()
         allowed_methods = ['get', 'post', 'put', 'delete']
@@ -161,7 +186,7 @@ class ConfirmationResource(MultipartResource, ModelResource):
 
 class ServicesResource(MultipartResource, ModelResource):
     user = fields.ForeignKey(UserResource, 'user', null=True, full=True)
-    sub_category = fields.ForeignKey(SubCategoryResources, 'sub_category', null=True, full=True)
+    sub_category = fields.ForeignKey(SubCategoryResourcesService, 'sub_category', null=True, full=True)
 
     class Meta:
         limit = 0
