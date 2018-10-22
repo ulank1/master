@@ -66,7 +66,7 @@ class SubCategoryResources(MultipartResource, ModelResource):
 class CategoryResourcesService(MultipartResource, ModelResource):
     class Meta:
         resource_name = 'category_service'
-        queryset = Category.objects.all()
+        queryset = CategoryService.objects.all()
         authorization = Authorization()
         allowed_methods = ['get', 'post', 'put', 'delete']
         filtering = {
@@ -79,7 +79,7 @@ class SubCategoryResourcesService(MultipartResource, ModelResource):
 
     class Meta:
         resource_name = 'subcategory_service'
-        queryset = SubCategory.objects.all()
+        queryset = SubCategoryService.objects.all()
         authorization = Authorization()
         allowed_methods = ['get', 'post', 'put', 'delete']
         filtering = {
