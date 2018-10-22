@@ -184,6 +184,17 @@ class ConfirmationOrder(models.Model):
 
     user = models.ForeignKey(Users, verbose_name='пользователь')
     order = models.ForeignKey(Order, verbose_name='Заказ')
+    status = models.IntegerField(default=1, null=True, blank=True)
+    confirmation = models.CharField(max_length=200, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True)
+    updated_at = models.DateTimeField(auto_now=True, blank=True)
+
+
+class ConfirmationService(models.Model):
+
+    user = models.ForeignKey(Users, verbose_name='пользователь')
+    order = models.ForeignKey(ServiceMaster, verbose_name='Заказ')
+    status = models.IntegerField(default=1, null=True, blank=True)
     confirmation = models.CharField(max_length=200, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
     updated_at = models.DateTimeField(auto_now=True, blank=True)

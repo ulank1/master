@@ -72,20 +72,6 @@ class ForumSubCategoryAdmin(admin.ModelAdmin):
 admin.site.register(ForumSubCategory, ForumSubCategoryAdmin)
 
 
-class ConfirmationAdmin(admin.ModelAdmin):
-    model = Confirmation
-
-
-admin.site.register(Confirmation, ConfirmationAdmin)
-
-
-class ConfirmAdmin(admin.ModelAdmin):
-    model = ConfirmationOrder
-
-
-admin.site.register(ConfirmationOrder, ConfirmAdmin)
-
-
 class ForumAdmin(admin.ModelAdmin):
     model = Forum
     readonly_fields = 'created_at updated_at'.split()

@@ -8,7 +8,7 @@ from tastypie.exceptions import BadRequest
 from tastypie.resources import ModelResource
 
 from models import Users, Category, Order, ServiceMaster, SubCategory, Forum, ForumSubCategory, ForumCategory, Comment, \
-    Confirmation, ConfirmationOrder, CategoryService, SubCategoryService
+    Confirmation, ConfirmationOrder, CategoryService, SubCategoryService, ConfirmationService
 
 
 class MultipartResource(object):
@@ -232,6 +232,26 @@ class ConfirmationOrderResource(MultipartResource, ModelResource):
         resource_name = 'confirm'
         filtering = {
             'id': ALL_WITH_RELATIONS,
+            'status': ALL_WITH_RELATIONS,
+            'user': ALL_WITH_RELATIONS,
+            'order': ALL_WITH_RELATIONS,
+        }
+
+
+class ConfirmationServiceResource(MultipartResource, ModelResource):
+    order = fields.ForeignKey(OrderResource, 'order', null=True, full=True)
+    user = fields.ForeignKey(UserResource, 'user', null=True, full=True)
+
+    class Meta:
+        limit = 0
+        max_limit = 0
+        queryset = ConfirmationService.objects.all()
+        authorization = Authorization()
+        allowed_methods = ['get', 'post', 'put', 'delete']
+        resource_name = 'confirm_service'
+        filtering = {
+            'id': ALL_WITH_RELATIONS,
+            'status': ALL_WITH_RELATIONS,
             'user': ALL_WITH_RELATIONS,
             'order': ALL_WITH_RELATIONS,
         }
