@@ -239,7 +239,7 @@ class ConfirmationOrderResource(MultipartResource, ModelResource):
 
 
 class ConfirmationServiceResource(MultipartResource, ModelResource):
-    order = fields.ForeignKey(OrderResource, 'order', null=True, full=True)
+    order = fields.ForeignKey(ServicesResource, 'order', null=True, full=True)
     user = fields.ForeignKey(UserResource, 'user', null=True, full=True)
 
     class Meta:
