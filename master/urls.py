@@ -34,6 +34,8 @@ v1_api.register(CommentResource())
 v1_api.register(ConfirmationResource())
 v1_api.register(ConfirmationOrderResource())
 v1_api.register(ConfirmationServiceResource())
+v1_api.register(CommentUserResource())
+v1_api.register(ReviewResource())
 
 urlpatterns = [
     url(r'^jet/', include('jet.urls', 'jet')),  # Django JET URLS

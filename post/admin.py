@@ -3,7 +3,8 @@ from __future__ import unicode_literals
 
 from django.contrib import admin
 
-from models import Users, Category, Order, ServiceMaster, SubCategory, Forum, ForumSubCategory, ForumCategory, Confirmation, ConfirmationOrder, SubCategoryService, CategoryService
+from models import Users, Category, Order, ServiceMaster, SubCategory, Forum, ForumSubCategory, ForumCategory, \
+    Confirmation, ConfirmationOrder, SubCategoryService, CategoryService, Review, CommentUser
 
 
 # Register your models here.
@@ -114,3 +115,25 @@ class ServiceAdmin(admin.ModelAdmin):
 
 
 admin.site.register(ServiceMaster, ServiceAdmin)
+
+
+class ReviewAdmin(admin.ModelAdmin):
+    model = Review
+    list_display = "display_user_name"
+
+    def display_user_name(self, obj):
+        return obj.user.name
+
+
+admin.site.register(Review, ReviewAdmin)
+
+
+class CommentUserAdmin(admin.ModelAdmin):
+    model = CommentUser
+    list_display = "display_user_name"
+
+    def display_user_name(self, obj):
+        return obj.user.name
+
+
+admin.site.register(CommentUser, CommentUserAdmin)

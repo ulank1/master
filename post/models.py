@@ -111,8 +111,8 @@ class Forum(models.Model):
     count = models.IntegerField(verbose_name='количество', default=0, null=True, blank=True)
     sub_category = models.ForeignKey(ForumSubCategory, verbose_name='категория')
     user = models.ForeignKey(Users, verbose_name='пользователь')
-    created_at = models.DateTimeField(auto_now_add=True, blank=True,null=True)
-    updated_at = models.DateTimeField(auto_now=True, blank=True,null=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
 
     def __unicode__(self):
         return self.title
@@ -134,7 +134,6 @@ class Comment(models.Model):
 
 
 class Confirmation(models.Model):
-
     user = models.ForeignKey(Users, verbose_name='пользователь')
     forum = models.ForeignKey(Forum, verbose_name='форум')
     confirmation = models.CharField(max_length=200, null=True, blank=True)
@@ -146,6 +145,12 @@ class ServiceMaster(models.Model):
     class Meta:
         verbose_name = 'Услуга'
         verbose_name_plural = 'Услуги'
+
+    image1 = models.ImageField(upload_to=image_upload_to, verbose_name='Картинка1', null=True, blank=True)
+    image2 = models.ImageField(upload_to=image_upload_to, verbose_name='Картинка2', null=True, blank=True)
+    image3 = models.ImageField(upload_to=image_upload_to, verbose_name='Картинка3', null=True, blank=True)
+    image4 = models.ImageField(upload_to=image_upload_to, verbose_name='Картинка4', null=True, blank=True)
+    image5 = models.ImageField(upload_to=image_upload_to, verbose_name='Картинка5', null=True, blank=True)
 
     address = models.CharField(verbose_name="адрес", max_length=500, null=True, blank=True)
     description = models.TextField(verbose_name="описание", null=True, blank=True)
@@ -165,6 +170,12 @@ class Order(models.Model):
         verbose_name = 'Заказ'
         verbose_name_plural = 'Заказы'
 
+    image1 = models.ImageField(upload_to=image_upload_to, verbose_name='Картинка1', null=True, blank=True)
+    image2 = models.ImageField(upload_to=image_upload_to, verbose_name='Картинка2', null=True, blank=True)
+    image3 = models.ImageField(upload_to=image_upload_to, verbose_name='Картинка3', null=True, blank=True)
+    image4 = models.ImageField(upload_to=image_upload_to, verbose_name='Картинка4', null=True, blank=True)
+    image5 = models.ImageField(upload_to=image_upload_to, verbose_name='Картинка5', null=True, blank=True)
+
     sub_category = models.ForeignKey(SubCategory, verbose_name='категория', null=True, blank=True)
     user = models.ForeignKey(Users, verbose_name='заказчик', null=True, blank=True)
     image = models.ImageField(upload_to=image_upload_to, verbose_name='Картинка', null=True, blank=True)
@@ -181,7 +192,6 @@ class Order(models.Model):
 
 
 class ConfirmationOrder(models.Model):
-
     user = models.ForeignKey(Users, verbose_name='пользователь')
     order = models.ForeignKey(Order, verbose_name='Заказ')
     status = models.IntegerField(default=1, null=True, blank=True)
@@ -191,10 +201,22 @@ class ConfirmationOrder(models.Model):
 
 
 class ConfirmationService(models.Model):
-
     user = models.ForeignKey(Users, verbose_name='пользователь')
     order = models.ForeignKey(ServiceMaster, verbose_name='Заказ')
     status = models.IntegerField(default=1, null=True, blank=True)
     confirmation = models.CharField(max_length=200, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
     updated_at = models.DateTimeField(auto_now=True, blank=True)
+
+
+class Review(models.Model):
+    user = models.ForeignKey(Users, verbose_name='пользователь')
+    status = models.IntegerField(null=True, blank=True, verbose_name='оценка')
+
+
+class CommentUser(models.Model):
+    user = models.ForeignKey(Users, verbose_name='пользователь')
+    comment = models.CharField(max_length=200, null=True, blank=True, verbose_name='коментарий')
+
+    def __unicode__(self):
+        return self.comment
