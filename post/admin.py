@@ -119,7 +119,7 @@ admin.site.register(ServiceMaster, ServiceAdmin)
 
 class ReviewAdmin(admin.ModelAdmin):
     model = Review
-    list_display = "display_user_name"
+    list_display = ("display_user_name", "status")
 
     def display_user_name(self, obj):
         return obj.user.name
@@ -130,7 +130,7 @@ admin.site.register(Review, ReviewAdmin)
 
 class CommentUserAdmin(admin.ModelAdmin):
     model = CommentUser
-    list_display = "display_user_name"
+    list_display = ("display_user_name", "comment")
 
     def display_user_name(self, obj):
         return obj.user.name
