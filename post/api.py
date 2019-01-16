@@ -8,7 +8,7 @@ from tastypie.exceptions import BadRequest
 from tastypie.resources import ModelResource
 
 from models import Users, Category, Order, ServiceMaster, SubCategory, Forum, ForumSubCategory, ForumCategory, Comment, \
-    Confirmation, ConfirmationOrder, CategoryService, SubCategoryService, ConfirmationService, Review, CommentUser
+    Confirmation, ConfirmationOrder, CategoryService, SubCategoryService, ConfirmationService, Review, LikeForum, LikeOrder, LikeService
 
 
 class MultipartResource(object):
@@ -258,8 +258,6 @@ class ConfirmationServiceResource(MultipartResource, ModelResource):
 
 
 class ReviewResource(MultipartResource, ModelResource):
-    user = fields.ForeignKey(UserResource, 'user', null=True, full=True)
-
     class Meta:
         limit = 0
         max_limit = 0
@@ -269,21 +267,51 @@ class ReviewResource(MultipartResource, ModelResource):
         resource_name = 'review'
         filtering = {
             'status': ALL_WITH_RELATIONS,
-            'user': ALL_WITH_RELATIONS,
+            'user_id': ALL_WITH_RELATIONS,
+            'user_id_owner': ALL_WITH_RELATIONS,
         }
 
 
-class CommentUserResource(MultipartResource, ModelResource):
-    user = fields.ForeignKey(UserResource, 'user', null=True, full=True)
-
+class LikeServiceResource(MultipartResource, ModelResource):
     class Meta:
         limit = 0
         max_limit = 0
-        queryset = CommentUser.objects.all()
+        queryset = LikeService.objects.all()
         authorization = Authorization()
         allowed_methods = ['get', 'post', 'put', 'delete']
-        resource_name = 'comment_user'
+        resource_name = 'like_service'
         filtering = {
-            'comment': ALL_WITH_RELATIONS,
-            'user': ALL_WITH_RELATIONS,
+            'type_id': ALL_WITH_RELATIONS,
+            'user_id_owner': ALL_WITH_RELATIONS,
+
+        }
+
+
+class LikeOrderResource(MultipartResource, ModelResource):
+    class Meta:
+        limit = 0
+        max_limit = 0
+        queryset = LikeService.objects.all()
+        authorization = Authorization()
+        allowed_methods = ['get', 'post', 'put', 'delete']
+        resource_name = 'like_order'
+        filtering = {
+            'type_id': ALL_WITH_RELATIONS,
+            'user_id_owner': ALL_WITH_RELATIONS,
+
+        }
+
+
+class LikeForumResource(MultipartResource, ModelResource):
+    class Meta:
+        limit = 0
+        max_limit = 0
+        queryset = LikeService.objects.all()
+        authorization = Authorization()
+        allowed_methods = ['get', 'post', 'put', 'delete']
+        resource_name = 'like_forum'
+        filtering = {
+            'type_id': ALL_WITH_RELATIONS,
+            'user_id_owner': ALL_WITH_RELATIONS,
+
         }

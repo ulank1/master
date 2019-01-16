@@ -105,6 +105,9 @@ class Forum(models.Model):
         verbose_name = 'Форум'
         verbose_name_plural = 'Форум'
 
+    address = models.CharField(verbose_name="адрес", max_length=500, null=True, blank=True)
+    lat = models.FloatField(max_length=20, null=True, blank=True)
+    lng = models.FloatField(max_length=20, null=True, blank=True)
     description = models.TextField(verbose_name="описание", null=True, blank=True)
     image = models.ImageField(upload_to=image_upload_to, verbose_name='Картинка', null=True, blank=True)
     title = models.CharField(verbose_name='название', max_length=200, null=True, blank=True)
@@ -210,13 +213,22 @@ class ConfirmationService(models.Model):
 
 
 class Review(models.Model):
-    user = models.ForeignKey(Users, verbose_name='пользователь')
+    user_id = models.IntegerField(null=True, blank=True)
+    user_id_owner = models.IntegerField(null=True, blank=True)
     status = models.IntegerField(null=True, blank=True, verbose_name='оценка')
+    comment = models.CharField(max_length=100, null=True, blank=True)
 
 
-class CommentUser(models.Model):
-    user = models.ForeignKey(Users, verbose_name='пользователь')
-    comment = models.CharField(max_length=200, null=True, blank=True, verbose_name='коментарий')
+class LikeService(models.Model):
+    user_id_owner = models.IntegerField(null=True, blank=True)
+    type_id = models.IntegerField(null=True, blank=True)
 
-    def __unicode__(self):
-        return self.comment
+
+class LikeOrder(models.Model):
+    user_id_owner = models.IntegerField(null=True, blank=True)
+    type_id = models.IntegerField(null=True, blank=True)
+
+
+class LikeForum(models.Model):
+    user_id_owner = models.IntegerField(null=True, blank=True)
+    type_id = models.IntegerField(null=True, blank=True)
