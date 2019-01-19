@@ -291,7 +291,7 @@ class LikeOrderResource(MultipartResource, ModelResource):
     class Meta:
         limit = 0
         max_limit = 0
-        queryset = LikeService.objects.all()
+        queryset = LikeOrder.objects.all()
         authorization = Authorization()
         allowed_methods = ['get', 'post', 'put', 'delete']
         resource_name = 'like_order'
@@ -306,7 +306,7 @@ class LikeForumResource(MultipartResource, ModelResource):
     class Meta:
         limit = 0
         max_limit = 0
-        queryset = LikeService.objects.all()
+        queryset = LikeForum.objects.all()
         authorization = Authorization()
         allowed_methods = ['get', 'post', 'put', 'delete']
         resource_name = 'like_forum'
