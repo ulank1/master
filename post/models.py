@@ -248,6 +248,7 @@ class CommentService(models.Model):
         verbose_name_plural = 'Коментарии'
 
     author = models.IntegerField(null=True, blank=True)
+    name = models.CharField(max_length=200, null=True, blank=True)
     service = models.IntegerField(null=True, blank=True)
     comment = models.CharField(verbose_name='Коментарий', max_length=200, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
@@ -264,9 +265,11 @@ class CommentOrder(models.Model):
 
     author = models.IntegerField(null=True, blank=True)
     service = models.IntegerField(null=True, blank=True)
+    name = models.CharField(max_length=200, null=True, blank=True)
     comment = models.CharField(verbose_name='Коментарий', max_length=200, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
     updated_at = models.DateTimeField(auto_now=True, blank=True)
 
     def __unicode__(self):
         return self.title
+
