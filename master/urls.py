@@ -38,6 +38,8 @@ v1_api.register(ReviewResource())
 v1_api.register(LikeForumResource())
 v1_api.register(LikeOrderResource())
 v1_api.register(LikeServiceResource())
+v1_api.register(CommentOrderResource())
+v1_api.register(CommentServiceResource())
 
 urlpatterns = [
     url(r'^jet/', include('jet.urls', 'jet')),  # Django JET URLS

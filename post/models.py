@@ -105,6 +105,12 @@ class Forum(models.Model):
         verbose_name = 'Форум'
         verbose_name_plural = 'Форум'
 
+    image1 = models.ImageField(upload_to=image_upload_to, verbose_name='Картинка1', null=True, blank=True)
+    image2 = models.ImageField(upload_to=image_upload_to, verbose_name='Картинка2', null=True, blank=True)
+    image3 = models.ImageField(upload_to=image_upload_to, verbose_name='Картинка3', null=True, blank=True)
+    image4 = models.ImageField(upload_to=image_upload_to, verbose_name='Картинка4', null=True, blank=True)
+    image5 = models.ImageField(upload_to=image_upload_to, verbose_name='Картинка5', null=True, blank=True)
+
     address = models.CharField(verbose_name="адрес", max_length=500, null=True, blank=True)
     lat = models.FloatField(max_length=20, null=True, blank=True)
     lng = models.FloatField(max_length=20, null=True, blank=True)
@@ -156,7 +162,8 @@ class ServiceMaster(models.Model):
     image5 = models.ImageField(upload_to=image_upload_to, verbose_name='Картинка5', null=True, blank=True)
 
     address = models.CharField(verbose_name="адрес", max_length=500, null=True, blank=True)
-    description = models.TextField(verbose_name="описание", null=True, blank=True)
+    description = models.TextField(verbose_name="название", null=True, blank=True)
+    info = models.TextField(verbose_name="дополнительная информфция", max_length=500, null=True, blank=True)
     image = models.ImageField(upload_to=image_upload_to, verbose_name='Картинка', null=True, blank=True)
     experience = models.FloatField(verbose_name="Опыт", null=True, blank=True)
     lat = models.FloatField(max_length=20, null=True, blank=True)
@@ -185,7 +192,8 @@ class Order(models.Model):
     address = models.CharField(verbose_name="адрес", max_length=500, null=True, blank=True)
     lat = models.FloatField(max_length=20, null=True, blank=True)
     lng = models.FloatField(max_length=20, null=True, blank=True)
-    description = models.TextField(verbose_name="описание", max_length=500, null=True, blank=True)
+    description = models.TextField(verbose_name="название", null=True, blank=True)
+    info = models.TextField(verbose_name="дополнительная информфция", max_length=500, null=True, blank=True)
     status = models.IntegerField(default=1, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
     updated_at = models.DateTimeField(auto_now=True, blank=True)
@@ -232,3 +240,33 @@ class LikeOrder(models.Model):
 class LikeForum(models.Model):
     user_id_owner = models.IntegerField(null=True, blank=True)
     type_id = models.IntegerField(null=True, blank=True)
+
+
+class CommentService(models.Model):
+    class Meta:
+        verbose_name = 'Коментарий'
+        verbose_name_plural = 'Коментарии'
+
+    author = models.IntegerField(null=True, blank=True)
+    service = models.IntegerField(null=True, blank=True)
+    comment = models.CharField(verbose_name='Коментарий', max_length=200, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True)
+    updated_at = models.DateTimeField(auto_now=True, blank=True)
+
+    def __unicode__(self):
+        return self.title
+
+
+class CommentOrder(models.Model):
+    class Meta:
+        verbose_name = 'Коментарий'
+        verbose_name_plural = 'Коментарии'
+
+    author = models.IntegerField(null=True, blank=True)
+    service = models.IntegerField(null=True, blank=True)
+    comment = models.CharField(verbose_name='Коментарий', max_length=200, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True)
+    updated_at = models.DateTimeField(auto_now=True, blank=True)
+
+    def __unicode__(self):
+        return self.title
