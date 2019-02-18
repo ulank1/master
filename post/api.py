@@ -339,9 +339,9 @@ class CommentOrderResource(MultipartResource, ModelResource):
         queryset = CommentOrder.objects.all()
         authorization = Authorization()
         allowed_methods = ['get', 'post', 'put', 'delete']
-        resource_name = 'comment_service'
+        resource_name = 'comment_order'
         filtering = {
             'author': ALL_WITH_RELATIONS,
-            'order': ALL_WITH_RELATIONS,
+            'service': ALL_WITH_RELATIONS,
 
         }
