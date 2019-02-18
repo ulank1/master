@@ -321,7 +321,7 @@ class CommentServiceResource(MultipartResource, ModelResource):
     class Meta:
         limit = 0
         max_limit = 0
-        queryset = CommentServie.objects.all()
+        queryset = CommentService.objects.all()
         authorization = Authorization()
         allowed_methods = ['get', 'post', 'put', 'delete']
         resource_name = 'comment_service'
