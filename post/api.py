@@ -135,7 +135,7 @@ class ForumResource(MultipartResource, ModelResource):
     class Meta:
         limit = 0
         max_limit = 0
-        queryset = Forum.objects.all()
+        queryset = Forum.objects.objects.order_by('-id')
         authorization = Authorization()
         allowed_methods = ['get', 'post', 'put', 'delete']
         resource_name = 'forum1'
