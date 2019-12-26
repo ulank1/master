@@ -191,7 +191,7 @@ class ServicesResource(MultipartResource, ModelResource):
     class Meta:
         limit = 0
         max_limit = 0
-        queryset = ServiceMaster.objects.all()
+        queryset = ServiceMaster.objects.order_by('-id')
         authorization = Authorization()
         allowed_methods = ['get', 'post', 'put', 'delete']
         resource_name = 'service'
@@ -208,7 +208,7 @@ class OrderResource(MultipartResource, ModelResource):
     class Meta:
         limit = 0
         max_limit = 0
-        queryset = Order.objects.all()
+        queryset = Order.objects.order_by('-id')
         authorization = Authorization()
         allowed_methods = ['get', 'post', 'put', 'delete']
         resource_name = 'order'

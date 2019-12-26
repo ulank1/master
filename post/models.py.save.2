@@ -116,7 +116,7 @@ class Forum(models.Model):
     lng = models.FloatField(max_length=20, null=True, blank=True)
     description = models.TextField(verbose_name="описание", null=True, blank=True)
     image = models.ImageField(upload_to=image_upload_to, verbose_name='Картинка', null=True, blank=True)
-    title = models.CharField(verbose_name='название', max_length=200)
+    title = models.CharField(verbose_name='название', max_length=200, null=True, blank=True)
     count = models.IntegerField(verbose_name='количество', default=0, null=True, blank=True)
     sub_category = models.ForeignKey(ForumSubCategory, verbose_name='категория')
     user = models.ForeignKey(Users, verbose_name='пользователь')
@@ -169,7 +169,7 @@ class ServiceMaster(models.Model):
     lat = models.FloatField(max_length=20, null=True, blank=True)
     lng = models.FloatField(max_length=20, null=True, blank=True)
     sub_category = models.ForeignKey(SubCategoryService, verbose_name='категория', null=True, blank=True)
-    user = models.ForeignKey(Users, verbose_name='пользователь')
+    user = models.ForeignKey(Users, verbose_name='пользователь', null=True, blank=True)
 
     def __unicode__(self):
         return self.address
@@ -186,7 +186,7 @@ class Order(models.Model):
     image4 = models.ImageField(upload_to=image_upload_to, verbose_name='Картинка4', null=True, blank=True)
     image5 = models.ImageField(upload_to=image_upload_to, verbose_name='Картинка5', null=True, blank=True)
 
-    sub_category = models.ForeignKey(SubCategory, verbose_name='категория')
+    sub_category = models.ForeignKey(SubCategory, verbose_name='категория', null=True, blank=True)
     user = models.ForeignKey(Users, verbose_name='заказчик', null=True, blank=True)
     image = models.ImageField(upload_to=image_upload_to, verbose_name='Картинка', null=True, blank=True)
     address = models.CharField(verbose_name="адрес", max_length=500, null=True, blank=True)
@@ -205,8 +205,8 @@ class Order(models.Model):
 class ConfirmationOrder(models.Model):
     user = models.ForeignKey(Users, verbose_name='пользователь')
     order = models.ForeignKey(Order, verbose_name='Заказ')
-    last = models.IntegerField(null=True,blank=True)
-    status = models.IntegerField(default=1, null=True, blank=True)
+    last = models.IntegerField(null=True, blank=True)
+last = models.IntegerField(null=True, blank=True)    status = models.IntegerField(default=1, null=True, blank=True)
     confirmation = models.CharField(max_length=200, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
     updated_at = models.DateTimeField(auto_now=True, blank=True)
@@ -215,7 +215,7 @@ class ConfirmationOrder(models.Model):
 class ConfirmationService(models.Model):
     user = models.ForeignKey(Users, verbose_name='пользователь')
     order = models.ForeignKey(ServiceMaster, verbose_name='Заказ')
-    last = models.IntegerField(null=True,blank=True)
+    
     status = models.IntegerField(default=1, null=True, blank=True)
     confirmation = models.CharField(max_length=200, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
@@ -274,5 +274,4 @@ class CommentOrder(models.Model):
 
     def __unicode__(self):
         return self.title
-
 

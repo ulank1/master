@@ -20,6 +20,7 @@ from models import Users, Category, Order, ServiceMaster, SubCategory, Forum, Fo
 #
 #
 # admin.site.register(User, RoomAdmin)
+from post.models import ConfirmationService
 
 
 class UserAdmin(admin.ModelAdmin):
@@ -50,6 +51,13 @@ class CategoryAdminService(admin.ModelAdmin):
 
 
 admin.site.register(CategoryService, CategoryAdminService)
+
+
+class ConfirmationAdminService(admin.ModelAdmin):
+    model = ConfirmationService
+
+
+admin.site.register(ConfirmationService, ConfirmationAdminService)
 
 
 class SubCategoryAdminService(admin.ModelAdmin):
@@ -115,5 +123,6 @@ class ServiceAdmin(admin.ModelAdmin):
 
 
 admin.site.register(ServiceMaster, ServiceAdmin)
+
 
 
